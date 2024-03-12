@@ -36,6 +36,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     user: {
       user_name: user.user_name,
       id: user._id,
+      bio: user.bio,
     },
   };
   return res.json(message);
