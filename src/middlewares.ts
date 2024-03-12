@@ -32,12 +32,13 @@ const authenticate = async (
 ) => {
   try {
     const bearer = req.headers.authorization;
-    // console.log(bearer);
+    console.log("bää" + bearer);
     if (!bearer) {
       next(new CustomError('No token provided', 401));
       return;
     }
     const token = bearer.split(' ')[1];
+    console.log("token " + token);
     if (!token || token === 'undefined') {
       next(new CustomError('No token provided', 401));
       return;
@@ -46,7 +47,7 @@ const authenticate = async (
       token,
       process.env.JWT_SECRET as string,
     ) as LoginUser;
-
+    console.log("userFromToken " + userFromToken);
     const user = await userModel.findById(userFromToken.id).select('-password');
 
     if (!user) {
@@ -60,6 +61,7 @@ const authenticate = async (
       id: user.id,
       role: user.role,
     };
+    console.log("outputUser " + outputUser.user_name + " " + outputUser.id + " " + outputUser.role);
 
     res.locals.userFromToken = outputUser;
     next();

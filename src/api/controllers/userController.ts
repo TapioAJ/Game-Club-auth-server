@@ -144,10 +144,13 @@ const checkToken = async (
   res: Response<UserResponse, {userFromToken: LoginUser}>,
   next: NextFunction,
 ) => {
+  console.log('res.locals.userFromToken', res.locals.userFromToken); 
   try {
     const userData: UserOutput = await userModel
       .findById(res.locals.userFromToken.id)
-      .select('-password, role');
+      .select('user_name bio');
+
+      console.log('userData', userData);
     if (!userData) {
       next(new CustomError('Token not valid', 404));
       return;
