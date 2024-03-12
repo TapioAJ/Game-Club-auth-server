@@ -8,7 +8,7 @@ type User = Partial<Document> & {
   bio: string | null;
 };
 
-type UserOutput = Omit<User, 'password' | 'role' | 'bio'>;
+type UserOutput = Omit<User, 'password' | 'role'>;
 
 type UserInput = Omit<User, 'id' | 'role'>;
 
@@ -21,12 +21,4 @@ type TokenContent = {
   user: LoginUser;
 };
 
-
-export {
-  User,
-  LoginUser,
-  TokenContent,
-  UserOutput,
-  UserInput,
-  UserTest,
-};
+export {User, LoginUser, TokenContent, UserOutput, UserInput, UserTest};
