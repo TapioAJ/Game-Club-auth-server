@@ -54,6 +54,7 @@ const userPost = async (
       user: {
         user_name: newUser.user_name,
         id: newUser._id,
+        bio: newUser.bio,
       },
     };
     res.json(response);
@@ -90,6 +91,7 @@ const userPut = async (
       user: {
         user_name: result.user_name,
         id: result._id,
+        bio: result.bio,
       },
     };
     res.json(response);
@@ -127,6 +129,7 @@ const userDelete = async (
       user: {
         user_name: result.user_name,
         id: result._id,
+        bio: result.bio,
       },
     };
     console.log('delete response', response);
