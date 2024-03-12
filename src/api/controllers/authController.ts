@@ -7,7 +7,8 @@ import {LoginResponse} from '../../types/MessageTypes';
 import {LoginUser} from '../../types/DBTypes';
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
-  const {user_name: user_name, password} = req.body;
+  const user_name: string = req.body.user_name;
+  const password: string = req.body.password;
 
   console.log('user, password', user_name, password);
   const user = await userModel.findOne({user_name: user_name});
