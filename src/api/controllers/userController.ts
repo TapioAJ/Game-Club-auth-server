@@ -15,7 +15,7 @@ const check = (req: Request, res: Response) => {
 const userListGet = async (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log('userListGet');
-    const users = await userModel.find().select('-password -role');
+    const users = await userModel.find().select('-password');
     res.json(users);
   } catch (error) {
     next(error);
@@ -30,7 +30,7 @@ const userGet = async (
   try {
     const user = await userModel
       .findById(req.params.id)
-      .select('-password -role');
+      .select('-password');
     if (!user) {
       next(new CustomError('User not found', 404));
     }
@@ -72,7 +72,7 @@ const userPut = async (
     const {userFromToken} = res.locals;
 
     let id = userFromToken.id;
-    if (userFromToken.role === 'admin' && req.params.id) {
+    if (req.params.id) {
       id = req.params.id;
     }
     console.log('id', id, req.body);
@@ -80,7 +80,7 @@ const userPut = async (
       .findByIdAndUpdate(id, req.body, {
         new: true,
       })
-      .select('-password -role');
+      .select('-password');
     if (!result) {
       next(new CustomError('User not found', 404));
       return;
@@ -108,18 +108,9 @@ const userDelete = async (
   try {
     const {userFromToken} = res.locals;
     let id;
-    if (req.params.id && userFromToken.role === 'admin') {
-      id = req.params.id;
-      console.log('i am admin', id);
-    }
-    if (userFromToken.role === 'user') {
-      id = userFromToken.id;
-      console.log('i am user', id);
-    }
-
     const result = await userModel
       .findByIdAndDelete(id)
-      .select('-password -role');
+      .select('-password');
     if (!result) {
       next(new CustomError('User not found', 404));
       return;
@@ -144,13 +135,13 @@ const checkToken = async (
   res: Response<UserResponse, {userFromToken: LoginUser}>,
   next: NextFunction,
 ) => {
-  console.log('res.locals.userFromToken', res.locals.userFromToken); 
+  console.log('res.locals.userFromToken', res.locals.userFromToken);
   try {
     const userData: UserOutput = await userModel
       .findById(res.locals.userFromToken.id)
       .select('user_name bio');
 
-      console.log('userData', userData);
+    console.log('userData', userData);
     if (!userData) {
       next(new CustomError('Token not valid', 404));
       return;

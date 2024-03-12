@@ -59,9 +59,8 @@ const authenticate = async (
     const outputUser: LoginUser = {
       user_name: user.user_name,
       id: user.id,
-      role: user.role,
     };
-    console.log("outputUser " + outputUser.user_name + " " + outputUser.id + " " + outputUser.role);
+    console.log("outputUser " + outputUser.user_name + " " + outputUser.id);
 
     res.locals.userFromToken = outputUser;
     next();
