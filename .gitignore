@@ -76,3 +76,7 @@ typings/
 .idea
 
 dist
+
+# misc
+.eslintrc
+.prettierrc
